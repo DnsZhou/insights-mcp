@@ -19,6 +19,7 @@ from insights_mcp import __version__
 from insights_mcp.mcp import INSIGHTS_BASE_URL, InsightsMCP
 from insights_mcp.oauth import Middleware
 from inventory_mcp.server import mcp as InventoryMCP
+from planning_mcp.server import mcp as PlanningMCP
 from rbac_mcp.server import mcp as RbacMCP
 from remediations_mcp.server import mcp as RemediationsMCP
 from vulnerability_mcp.server import mcp as VulnerabilityMCP
@@ -31,8 +32,18 @@ MCPS: list[InsightsMCP] = [
     InventoryMCP,
     ContentSourcesMCP,
     RbacMCP,
+    PlanningMCP,
 ]
 
+DEFAULT_MCPS: list[InsightsMCP] = [
+    ImageBuilderMCP,
+    VulnerabilityMCP,
+    RemediationsMCP,
+    AdvisorMCP,
+    InventoryMCP,
+    ContentSourcesMCP,
+    RbacMCP,
+]
 
 class InsightsMCPServer(FastMCP):
     """Unified MCP server that mounts multiple Red Hat Insights service servers.
@@ -237,6 +248,7 @@ def get_insights_mcp_version() -> str:
 def main():  # pylint: disable=too-many-statements,too-many-locals
     """Main entry point for the Insights MCP server."""
     available_toolsets = f"all, {', '.join(mcp.toolset_name for mcp in MCPS)}"
+    default_toolsets = ",".join(mcp.toolset_name for mcp in DEFAULT_MCPS)
     toolset_help = f"Comma-separated list of toolsets to use. Available toolsets: {available_toolsets} (default: all)"
 
     parser = argparse.ArgumentParser(prog="insights-mcp", description="Run Insights MCP server.")
@@ -297,6 +309,8 @@ def main():  # pylint: disable=too-many-statements,too-many-locals
         logger.info("Debug mode enabled")
 
     oauth_enabled = os.getenv("OAUTH_ENABLED", "false").lower() == "true"
+
+    default_toolsets = ",".join(mcp.toolset_name for mcp in DEFAULT_MCPS)
     toolset = args.toolset or os.getenv("INSIGHTS_TOOLSET", "all")
 
     if toolset == "all":
