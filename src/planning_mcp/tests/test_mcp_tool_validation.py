@@ -20,7 +20,7 @@ from tests.test_patterns import (
     [
         (
             "planning__get_upcoming_changes",
-            "Returns upcoming package changes (deprecations, additions, enhancements).",
+            "Lists upcoming package changes, deprecations, additions and enhancements.",
             {},
         ),
     ],

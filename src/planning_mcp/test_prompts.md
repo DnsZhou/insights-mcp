@@ -1,7 +1,6 @@
 # Planning MCP Test Prompts
 
-This file contains test prompts to validate the Planning MCP toolset
-integration with LLMs.
+This file contains test prompts to validate the Planning MCP toolset integration with LLMs.
 
 ## Tool: get_upcoming_changes
 
@@ -10,30 +9,26 @@ integration with LLMs.
 
 **Expected Behavior:**
 - Should call `planning__get_upcoming_changes` with no parameters.
-- Should return the full list of upcoming package changes as provided by
-  `/api/roadmap/v1/upcoming-changes`.
+- Should return the full list of upcoming package changes grouped by RHEL versions.
 
 ### Test 2: Filter by RHEL version (client-side)
 **Prompt:** "What upcoming changes are planned for RHEL 9.4?"
 
 **Expected Behavior:**
 - Should call `planning__get_upcoming_changes` with no parameters.
-- The model should then filter results for RHEL 9.4 and summarise the
-  relevant entries in natural language.
+- The model should then filter results for RHEL 9.4 and summarise the relevant entries in natural language.
 
 ### Test 3: Deprecations only (reasoning + summarisation)
 **Prompt:** "Which packages are going to be deprecated next year?"
 
 **Expected Behavior:**
 - Should call `planning__get_upcoming_changes` with no parameters.
-- The model should identify entries that correspond to deprecations and
-  summarise them, explaining timelines and impact.
+- The model should identify entries that correspond to deprecations and summarise them, explaining timelines and impact.
 
 ### Test 4: Explain roadmap impact
 **Prompt:** "Help me understand the main roadmap changes that might affect our RHEL 8 and 9 systems."
 
 **Expected Behavior:**
-- Should call `planning__get_upcoming_changes`.
-- The model should group and summarise changes by major version (RHEL 8 vs 9),
-  and present them as a planning-oriented narrative (risks, opportunities,
-  suggested next steps).
+- Should call `planning__get_upcoming_changes` with no parameters.
+- The model should group and summarise changes relevant to RHEL 8 and RHEL 9, focusing on timelines and potential impact, and may provide light planning context if helpful.
+

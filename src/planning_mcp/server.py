@@ -72,14 +72,14 @@ class PlanningMCP(InsightsMCP):
 
         for f in tool_functions:
             tool = Tool.from_function(f)
-            tool.annotations = ToolAnnotations(readOnlyHint=True, openWorldHint=True)
+            tool.annotations = ToolAnnotations(readOnlyHint=True, openWorldHint=True, idempotentHint=True)
             description_str = f.__doc__ or ""
             tool.description = description_str
             tool.title = description_str.split("\n", 1)[0]
             self.add_tool(tool)
 
     async def get_upcoming_changes(self) -> str:
-        """Returns upcoming package changes (deprecations, additions, enhancements).
+        """Lists upcoming package changes, deprecations, additions and enhancements. 
 
         🟢 CALL IMMEDIATELY - No information gathering required.
 
@@ -88,6 +88,15 @@ class PlanningMCP(InsightsMCP):
         is acceptable. When the user asks about a specific RHEL version (for example,
         "What is coming in RHEL 9.4?"), call this tool without parameters and then
         filter and summarise the entries relevant to that version in your response.
+        
+        Returns:
+            dict: A response object containing:
+                    - meta: Metadata including 'count' and 'total'.
+                    - data: A list of package records. Each record contains:
+                        - name (str): The package name.
+                        - type (str): The change type (e.g., 'addition').
+                        - release (str): The target release version.
+                        - details (dict): Detailed info including 'summary' and 'dateAdded'.
         """
         return await _get_upcoming_changes(self.insights_client, self.logger)
 
