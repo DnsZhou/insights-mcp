@@ -1,10 +1,11 @@
 """Test suite for the get_upcoming_changes() method."""
 
 import json
+from unittest.mock import patch
+
 import pytest
 
-from unittest.mock import patch
-from tests.conftest import ( 
+from tests.conftest import (
     assert_api_error_result,
 )
 
@@ -63,12 +64,12 @@ class TestPlanningGetUpcomingChanges:
                     "os_major": 11,
                     "date": "2032-10-01",
                     "details": {
-                            "architecture": "",
-                            "detailFormat": 0,
-                            "summary": "Example component C is planned to be removed in a future major release.",
-                            "trainingTicket": "PLAN-0003",
-                            "dateAdded": "2031-04-01",
-                            "lastModified": "2031-12-01",
+                        "architecture": "",
+                        "detailFormat": 0,
+                        "summary": "Example component C is planned to be removed in a future major release.",
+                        "trainingTicket": "PLAN-0003",
+                        "dateAdded": "2031-04-01",
+                        "lastModified": "2031-12-01",
                     },
                     "package": "",
                 },

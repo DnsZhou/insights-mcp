@@ -23,6 +23,7 @@ def planning_mcp_server() -> PlanningMCP:
     """
     return PlanningMCP()
 
+
 # Make the fixtures available for import
 __all__ = [
     "mcp_server_url",

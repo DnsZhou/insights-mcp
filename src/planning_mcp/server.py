@@ -79,7 +79,7 @@ class PlanningMCP(InsightsMCP):
             self.add_tool(tool)
 
     async def get_upcoming_changes(self) -> str:
-        """Lists upcoming package changes, deprecations, additions and enhancements. 
+        """List upcoming package changes, deprecations, additions and enhancements.
 
         🟢 CALL IMMEDIATELY - No information gathering required.
 
@@ -87,8 +87,8 @@ class PlanningMCP(InsightsMCP):
         additions, or enhancements in the roadmap when a full list of upcoming items
         is acceptable. When the user asks about a specific RHEL version (for example,
         "What is coming in RHEL 9.4?"), call this tool without parameters and then
-        filter and summarise the entries relevant to that version in your response.
-        
+        filter and summarize the entries relevant to that version in your response.
+
         Returns:
             dict: A response object containing:
                     - meta: Metadata including 'count' and 'total'.

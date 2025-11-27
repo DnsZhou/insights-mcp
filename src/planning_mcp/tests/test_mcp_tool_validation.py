@@ -20,7 +20,7 @@ from tests.test_patterns import (
     [
         (
             "planning__get_upcoming_changes",
-            "Lists upcoming package changes, deprecations, additions and enhancements.",
+            "List upcoming package changes, deprecations, additions and enhancements.",
             {},
         ),
     ],
@@ -40,9 +40,7 @@ def test_mcp_tools_include_descriptions_and_annotations(
 @pytest.mark.parametrize("mcp_server_url", ["http", "sse"], indirect=True)
 def test_transport_types_with_get_upcoming_changes(mcp_tools, request):
     """Test that http and sse transport types can start and expose get_upcoming_changes tool."""
-    assert_transport_types_expose_tool(
-        mcp_tools, request, "planning__get_upcoming_changes"
-    )
+    assert_transport_types_expose_tool(mcp_tools, request, "planning__get_upcoming_changes")
 
 
 @pytest.mark.parametrize("mcp_server_url", ["stdio"], indirect=True)

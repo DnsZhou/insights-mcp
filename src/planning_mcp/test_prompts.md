@@ -16,19 +16,18 @@ This file contains test prompts to validate the Planning MCP toolset integration
 
 **Expected Behavior:**
 - Should call `planning__get_upcoming_changes` with no parameters.
-- The model should then filter results for RHEL 9.4 and summarise the relevant entries in natural language.
+- The model should then filter results for RHEL 9.4 and summarize the relevant entries in natural language.
 
-### Test 3: Deprecations only (reasoning + summarisation)
+### Test 3: Deprecations only (reasoning + summarization)
 **Prompt:** "Which packages are going to be deprecated next year?"
 
 **Expected Behavior:**
 - Should call `planning__get_upcoming_changes` with no parameters.
-- The model should identify entries that correspond to deprecations and summarise them, explaining timelines and impact.
+- The model should identify entries that correspond to deprecations and summarize them, explaining timelines and impact.
 
 ### Test 4: Explain roadmap impact
 **Prompt:** "Help me understand the main roadmap changes that might affect our RHEL 8 and 9 systems."
 
 **Expected Behavior:**
 - Should call `planning__get_upcoming_changes` with no parameters.
-- The model should group and summarise changes relevant to RHEL 8 and RHEL 9, focusing on timelines and potential impact, and may provide light planning context if helpful.
-
+- The model should group and summarize changes relevant to RHEL 8 and RHEL 9, focusing on timelines and potential impact, and may provide light planning context if helpful.
