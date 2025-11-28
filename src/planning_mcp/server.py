@@ -13,6 +13,7 @@ from mcp.types import ToolAnnotations
 
 from insights_mcp.mcp import InsightsMCP
 from planning_mcp.tools.upcoming import get_upcoming_changes as _get_upcoming_changes
+from planning_mcp.tools.rhel_lifecycle import get_rhel_lifecycle as _get_upcoming_changes
 
 
 class PlanningMCP(InsightsMCP):
@@ -60,8 +61,8 @@ class PlanningMCP(InsightsMCP):
 
         tool_functions = [
             self.get_upcoming_changes,
+            self.get_rhel_lifecycle,
             # Future tools to add here:
-            # self.get_rhel_lifecycle,
             # self.get_appstreams_lifecycle,
             # self.get_relevant_rhel_lifecycle,
             # self.get_relevant_appstreams,
@@ -95,6 +96,41 @@ class PlanningMCP(InsightsMCP):
                         - type (str): The change type (e.g., 'addition').
                         - release (str): The target release version.
                         - details (dict): Detailed info including 'summary' and 'dateAdded'.
+        """
+        return await _get_upcoming_changes(self.insights_client, self.logger)
+
+    async def get_rhel_lifecycle(self) -> str:
+        """Returns lifecycle dates for all RHEL majors and minors.
+
+        🟢 CALL IMMEDIATELY - No information gathering required.
+
+        Use this tool when the user asks for RHEL lifecycle timelines, including major versions,
+        minor versions, or extended support types (EUS/E4S/ELS).
+
+        For “major-only” timelines (for example, “RHEL 8 lifecycle overview”), call this tool and then
+        focus on rows where minor is null. (Filtering is performed by the model or client, not the MCP tool.)
+
+        For a specific minor (for example, “RHEL 9.2 EUS lifecycle”), call this tool and then
+        focus on entries matching the requested major and minor. Interpretation of date windows or version
+        selection is done by the model/client.
+
+        When the user mentions dates or “expiring within N days”, call this tool and interpret
+        the start_date / end_date values to identify relevant versions. Interpretation of date windows or version
+        selection is done by the model/client.
+
+        Returns:
+            dict: A response object containing:
+                    - data: A list of RHEL lifecycle records
+                        - name (str): System name
+                        - start_date (str): Start date of support
+                        - end_date (str): End date of standard support
+                        - support_status (str): Status of support, e.g. retired, upcoming_release, supported
+                        - display_name (str): How the system should be presented the customer
+                        - major (int): Major system version 
+                        - minor (int): Minor system version
+                        - end_date_e4s (string | null): End date of Update Services for SAP Solutions support
+                        - end_date_els (string | null): End date of Extended Life-cycle Support
+                        - end_date_eus (string | null): End date of Extended Update Support
         """
         return await _get_upcoming_changes(self.insights_client, self.logger)
 
