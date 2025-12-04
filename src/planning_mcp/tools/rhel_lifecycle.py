@@ -21,7 +21,7 @@ async def get_rhel_lifecycle(insights_client: InsightsClient, logger: Logger | N
         # Otherwise, encode the dict to a JSON string for the MCP client.
         return json.dumps(response)
     except Exception as exc:  # pylint: disable=broad-exception-caught
-        error_detail = f"Error retrieving upcoming changes: {exc}"
+        error_detail = f"Error retrieving RHEL lifecycle changes: {exc}"
         if logger:
             logger.error(error_detail)
         return f"Error: API Error - {error_detail}"

@@ -12,8 +12,8 @@ from fastmcp.tools.tool import Tool
 from mcp.types import ToolAnnotations
 
 from insights_mcp.mcp import InsightsMCP
-from planning_mcp.tools.upcoming import get_upcoming_changes as _get_upcoming_changes
 from planning_mcp.tools.rhel_lifecycle import get_rhel_lifecycle as _get_rhel_lifecycle
+from planning_mcp.tools.upcoming import get_upcoming_changes as _get_upcoming_changes
 
 
 class PlanningMCP(InsightsMCP):
@@ -100,7 +100,7 @@ class PlanningMCP(InsightsMCP):
         return await _get_upcoming_changes(self.insights_client, self.logger)
 
     async def get_rhel_lifecycle(self) -> str:
-        """Returns lifecycle dates for all RHEL majors and minors.
+        """Returns life cycle dates for all RHEL majors and minors.
 
         🟢 CALL IMMEDIATELY - No information gathering required.
 
@@ -126,7 +126,7 @@ class PlanningMCP(InsightsMCP):
                         - end_date (str): End date of standard support
                         - support_status (str): Status of support, e.g. retired, upcoming_release, supported
                         - display_name (str): How the system should be presented the customer
-                        - major (int): Major system version 
+                        - major (int): Major system version
                         - minor (int): Minor system version
                         - end_date_e4s (string | null): End date of Update Services for SAP Solutions support
                         - end_date_els (string | null): End date of Extended Life-cycle Support
