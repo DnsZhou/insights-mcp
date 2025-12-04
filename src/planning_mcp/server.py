@@ -230,7 +230,7 @@ class PlanningMCP(InsightsMCP):
         )
         
     async def get_rhel_lifecycle(self) -> str:
-        """Returns lifecycle dates for all RHEL majors and minors.
+        """Returns life cycle dates for all RHEL majors and minors.
 
         🟢 CALL IMMEDIATELY - No information gathering required.
 
@@ -256,7 +256,7 @@ class PlanningMCP(InsightsMCP):
                         - end_date (str): End date of standard support
                         - support_status (str): Status of support, e.g. retired, upcoming_release, supported
                         - display_name (str): How the system should be presented the customer
-                        - major (int): Major system version 
+                        - major (int): Major system version
                         - minor (int): Minor system version
                         - end_date_e4s (string | null): End date of Update Services for SAP Solutions support
                         - end_date_els (string | null): End date of Extended Life-cycle Support

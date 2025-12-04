@@ -30,7 +30,7 @@ from tests.test_patterns import (
         ),
         (    
             "planning__get_rhel_lifecycle",
-            "Returns lifecycle dates for all RHEL majors and minors.",
+            "Returns life cycle dates for all RHEL majors and minors.",
             {},
         ),
     ],

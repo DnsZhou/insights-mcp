@@ -107,4 +107,3 @@ class TestPlanningGetRhelLifecycle:
 
             # Reuse common helper to validate error formatting
             assert_api_error_result(result)
-
