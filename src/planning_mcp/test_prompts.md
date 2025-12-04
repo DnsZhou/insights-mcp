@@ -65,3 +65,33 @@ This file contains test prompts to validate the Planning MCP toolset integration
   { "mode": "raw", "major": 8, "name": "postgresql" }
   ```
 - Should extract lifecycle status and end-of-life date from the results.
+
+## Tool: get_rhel_lifecycle
+
+### Test 1: List all RHEL lifecycle information
+**Prompt:** "Give me complete list of available RHEL versions."
+
+**Expected Behavior**
+- Should call `planning__get_rhel_lifecycle` with no parameters
+- Should return information about all RHEL versions provided by RHEL Lifecycle API, from RHEL 7 and above
+
+### Test 2: Filter specific RHEL version
+**Prompt:** "What is the support status of RHEL 10.1?"
+
+**Expected Behavior:**
+- Should call `planning__get_rhel_lifecycle` with no parameters
+- The model should filter lifecycle information for RHEL 10.1 and provide information about the support status.
+
+### Test 3: Retirements only
+**Prompt:** "Which RHEL version are going to be retired next year?"
+
+**Expected Behavior:**
+- Should call `planning__get_rhel_lifecycle` with no parameters
+- Should summarize which RHEL versions are going to be retired next year and provide recommendations about upgrades.
+
+### Test 4: Question about specific RHEL version after support
+**Prompt:** "I'm using RHEL 8.8. Are there any actions I should take?"
+
+**Expected Behavior**
+- Should call `planning__get_rhel_lifecycle` with no parameters
+- Should recomend upgrade to newer RHEL minor version, switch support plan and upgrade to newer major version.

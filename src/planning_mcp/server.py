@@ -16,7 +16,7 @@ from pydantic import Field
 from insights_mcp.mcp import InsightsMCP
 from planning_mcp.tools.appstreams import get_appstreams_lifecycle as _get_appstreams_lifecycle
 from planning_mcp.tools.upcoming import get_upcoming_changes as _get_upcoming_changes
-from planning_mcp.tools.rhel_lifecycle import get_rhel_lifecycle as _get_upcoming_changes
+from planning_mcp.tools.rhel_lifecycle import get_rhel_lifecycle as _get_rhel_lifecycle
 
 
 class PlanningMCP(InsightsMCP):
@@ -262,7 +262,7 @@ class PlanningMCP(InsightsMCP):
                         - end_date_els (string | null): End date of Extended Life-cycle Support
                         - end_date_eus (string | null): End date of Extended Update Support
         """
-        return await _get_upcoming_changes(self.insights_client, self.logger)
+        return await _get_rhel_lifecycle(self.insights_client, self.logger)
 
 
 # Instance used by the unified Insights MCP server (`insights_mcp.server`).

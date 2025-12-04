@@ -28,10 +28,16 @@ from tests.test_patterns import (
             "Get Application Streams lifecycle information.",
             {},
         ),
+        (    
+            "planning__get_rhel_lifecycle",
+            "Returns lifecycle dates for all RHEL majors and minors.",
+            {},
+        ),
     ],
     ids=[
         "planning__get_upcoming_changes",
         "planning__get_appstreams_lifecycle",
+        "planning_get_rhel_lifecycle",
     ],
 )
 def test_mcp_tools_include_descriptions_and_annotations(
