@@ -15,6 +15,7 @@ from pydantic import Field
 
 from insights_mcp.mcp import InsightsMCP
 from planning_mcp.tools.appstreams import get_appstreams_lifecycle as _get_appstreams_lifecycle
+from planning_mcp.tools.relevant_upcoming import get_relevant_upcoming_changes as _get_relevant_upcoming_changes
 from planning_mcp.tools.rhel_lifecycle import get_rhel_lifecycle as _get_rhel_lifecycle
 from planning_mcp.tools.upcoming import get_upcoming_changes as _get_upcoming_changes
 
@@ -67,10 +68,10 @@ class PlanningMCP(InsightsMCP):
             self.get_upcoming_changes,
             self.get_appstreams_lifecycle,
             self.get_rhel_lifecycle,
+            self.get_relevant_upcoming_changes,
             # Future tools to add here:
             # self.get_relevant_rhel_lifecycle,
             # self.get_relevant_appstreams,
-            # self.get_relevant_upcoming_changes,
         ]
 
         for f in tool_functions:
@@ -263,6 +264,54 @@ class PlanningMCP(InsightsMCP):
                         - end_date_eus (str | null): End date of Extended Update Support
         """
         return await _get_rhel_lifecycle(self.insights_client, self.logger)
+
+    async def get_relevant_upcoming_changes(
+        self,
+        major: Annotated[
+            int | None,
+            Field(
+                default=None,
+                description="Restricts relevance evaluation to systems running this RHEL major version.",
+            ),
+        ] = None,
+        minor: Annotated[
+            int | None,
+            Field(
+                default=None,
+                description=(
+                    "Used together with major to further restrict relevance evaluation "
+                    "to a specific minor version. Requires major to be specified."
+                ),
+            ),
+        ] = None,
+    ) -> str:
+        """List relevant upcoming package changes, deprecations, additions and enhancements.
+
+        🟢 CALL IMMEDIATELY - No information gathering required.
+
+        Use this tool to answer questions about upcoming package changes, deprecations,
+        additions, or enhancements in the roadmap filtered by relevance to your systems.
+        Optionally restrict the relevance evaluation to systems running a specific RHEL
+        major/minor version using the major and minor parameters.
+
+        Returns:
+            dict: A response object containing:
+                    - meta: Metadata including 'count' and 'total'.
+                    - data: A list of package records. Each record contains:
+                        - name (str): The package name.
+                        - type (str): The change type (e.g., 'addition').
+                        - release (str): The target release version.
+                        - details (dict): Detailed info including 'summary' and 'dateAdded'.
+                        - potentiallyAffectedSystemsDetail (list): Systems that might be
+                          affected by this change, including system IDs, display names,
+                          and OS versions.
+        """
+        return await _get_relevant_upcoming_changes(
+            insights_client=self.insights_client,
+            logger=self.logger,
+            major=major,
+            minor=minor,
+        )
 
 
 # Instance used by the unified Insights MCP server (`insights_mcp.server`).
