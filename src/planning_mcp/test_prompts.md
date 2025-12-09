@@ -73,7 +73,7 @@ This file contains test prompts to validate the Planning MCP toolset integration
 
 **Expected Behavior**
 - Should call `planning__get_rhel_lifecycle` with no parameters
-- Should return information about all RHEL versions provided by RHEL Life cycle API, from RHEL 7 and above
+- Should return information about all RHEL major and minor versions provided by RHEL Life cycle API; from RHEL 7 until, at least, RHEL 11.
 
 ### Test 2: Filter specific RHEL version
 **Prompt:** "What is the support status of RHEL 10.1?"
@@ -90,7 +90,7 @@ This file contains test prompts to validate the Planning MCP toolset integration
 - Should summarize which RHEL versions are going to be retired next year and provide recommendations about upgrades.
 
 ### Test 4: Question about specific RHEL version after support
-**Prompt:** "I'm using RHEL 8.8. Are there any actions I should take?"
+**Prompt:** "I'm using RHEL 8.8. Are there any actions regarding my RHEL version I should take?"
 
 **Expected Behavior**
 - Should call `planning__get_rhel_lifecycle` with no parameters
