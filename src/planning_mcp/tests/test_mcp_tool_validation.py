@@ -28,7 +28,7 @@ from tests.test_patterns import (
             "Get Application Streams lifecycle information.",
             {},
         ),
-        (    
+        (
             "planning__get_rhel_lifecycle",
             "Returns life cycle dates for all RHEL majors and minors.",
             {},

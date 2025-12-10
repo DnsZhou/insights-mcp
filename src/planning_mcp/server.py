@@ -15,8 +15,8 @@ from pydantic import Field
 
 from insights_mcp.mcp import InsightsMCP
 from planning_mcp.tools.appstreams import get_appstreams_lifecycle as _get_appstreams_lifecycle
-from planning_mcp.tools.upcoming import get_upcoming_changes as _get_upcoming_changes
 from planning_mcp.tools.rhel_lifecycle import get_rhel_lifecycle as _get_rhel_lifecycle
+from planning_mcp.tools.upcoming import get_upcoming_changes as _get_upcoming_changes
 
 
 class PlanningMCP(InsightsMCP):
@@ -228,7 +228,7 @@ class PlanningMCP(InsightsMCP):
             kind=_kind,
             logger=self.logger,
         )
-        
+
     async def get_rhel_lifecycle(self) -> str:
         """Returns life cycle dates for all RHEL majors and minors.
 
