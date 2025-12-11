@@ -69,7 +69,7 @@ This file contains test prompts to validate the Planning MCP toolset integration
 ## Tool: get_rhel_lifecycle
 
 ### Test 1: List all RHEL lifecycle information
-**Prompt:** "Give me complete list of available RHEL versions."
+**Prompt:** "Give me complete list of the available RHEL versions and their support status."
 
 **Expected Behavior**
 - Should call `planning__get_rhel_lifecycle` with no parameters

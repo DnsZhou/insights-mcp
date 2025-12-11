@@ -234,19 +234,19 @@ class PlanningMCP(InsightsMCP):
 
         🟢 CALL IMMEDIATELY - No information gathering required.
 
-        Use this tool when the user asks for RHEL lifecycle timelines, including major versions,
+        Use this tool when the user asks for RHEL versions and lifecycle timelines, including major versions,
         minor versions, or extended support types (EUS/E4S/ELS).
 
-        For "major-only" timelines (for example, "RHEL 8 lifecycle overview"), call this tool and then
-        focus on rows where minor is null. (Filtering is performed by the model or client, not the MCP tool.)
+        For "major-only" versions and timelines (for example, "RHEL 8 lifecycle overview"), call this tool and then
+        focus on rows where minor is null. Filtering is performed by you, not the MCP tool.
 
         For a specific minor (for example, "RHEL 9.2 EUS lifecycle"), call this tool and then
         focus on entries matching the requested major and minor. Interpretation of date windows or version
-        selection is done by the model/client.
+        selection is done by you.
 
         When the user mentions dates or "expiring within N days", call this tool and interpret
         the start_date / end_date values to identify relevant versions. Interpretation of date windows or version
-        selection is done by the model/client.
+        selection is done by you.
 
         Returns:
             dict: A response object containing:
