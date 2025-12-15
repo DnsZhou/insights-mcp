@@ -217,9 +217,12 @@ class TestPlanningGetRelevantUpcomingChanges:
         self,
         planning_mcp_server,
     ):
-        """Test that providing minor without major raises a ValueError."""
-        with pytest.raises(ValueError, match="The 'minor' parameter requires 'major' to be specified"):
-            await planning_mcp_server.get_relevant_upcoming_changes(minor=2)
+        """Test that providing minor without major returns an error."""
+        result = await planning_mcp_server.get_relevant_upcoming_changes(minor="2")
+
+        # The error should be returned as a string, not raised
+        assert "Error: API Error" in result
+        assert "The 'minor' parameter requires 'major' to be specified" in result
 
     @pytest.mark.asyncio
     async def test_get_relevant_upcoming_changes_api_error(self, planning_mcp_server):

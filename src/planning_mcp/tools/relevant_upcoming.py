@@ -12,8 +12,8 @@ from insights_mcp.client import InsightsClient
 async def get_relevant_upcoming_changes(
     insights_client: InsightsClient,
     logger: Logger | None = None,
-    major: int | None = None,
-    minor: int | None = None,
+    major: int | str | None = None,
+    minor: int | str | None = None,
 ) -> str:
     """Call GET relevant/upcoming-changes and return a JSON-encoded response.
 
@@ -28,19 +28,36 @@ async def get_relevant_upcoming_changes(
     Returns:
         A JSON-encoded string with the response data or an error message.
     """
-    if minor is not None and major is None:
-        raise ValueError("The 'minor' parameter requires 'major' to be specified")
-
     try:
+
+        def _normalise_int(name: str, value: int | str | None) -> int | None:
+            if value is None:
+                return None
+            if isinstance(value, int):
+                return value
+            s = value.strip()
+            if not s:
+                return None
+            try:
+                return int(s)
+            except ValueError as exc:
+                raise ValueError(f"Parameter '{name}' must be an integer (e.g. 8, 9, 10); got '{value}'.") from exc
+
+        major_int = _normalise_int("major", major)
+        minor_int = _normalise_int("minor", minor)
+
+        if minor_int is not None and major_int is None:
+            raise ValueError("The 'minor' parameter requires 'major' to be specified")
+
         params: dict[str, Any] = {}
-        if major is not None:
-            params["major"] = major
-        if minor is not None:
-            params["minor"] = minor
+        if major_int is not None:
+            params["major"] = major_int
+        if minor_int is not None:
+            params["minor"] = minor_int
 
         response: dict[str, Any] | str = await insights_client.get(
             "relevant/upcoming-changes",
-            params=params if params else None,
+            params=params or None,
         )
 
         # The underlying client may already return a JSON string; if so, pass it through.

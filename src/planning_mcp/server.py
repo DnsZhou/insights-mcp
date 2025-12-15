@@ -268,22 +268,22 @@ class PlanningMCP(InsightsMCP):
     async def get_relevant_upcoming_changes(
         self,
         major: Annotated[
-            int | None,
+            str,
             Field(
-                default=None,
+                default="",
                 description="Restricts relevance evaluation to systems running this RHEL major version.",
             ),
-        ] = None,
+        ] = "",
         minor: Annotated[
-            int | None,
+            str,
             Field(
-                default=None,
+                default="",
                 description=(
                     "Used together with major to further restrict relevance evaluation "
                     "to a specific minor version. Requires major to be specified."
                 ),
             ),
-        ] = None,
+        ] = "",
     ) -> str:
         """List relevant upcoming package changes, deprecations, additions and enhancements.
 
