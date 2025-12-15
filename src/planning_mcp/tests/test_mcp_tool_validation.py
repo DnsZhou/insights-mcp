@@ -35,7 +35,7 @@ from tests.test_patterns import (
         ),
         (
             "planning__get_relevant_upcoming_changes",
-            "List relevant upcoming package changes, deprecations, additions and enhancements.",
+            "List relevant upcoming package changes, deprecations, additions and enhancements to user's systems .",
             {},
         ),
     ],

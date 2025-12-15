@@ -46,6 +46,14 @@ class PlanningMCP(InsightsMCP):
           deprecations, additions, enhancements, or roadmap plans where a full list of
           upcoming items is acceptable.
 
+        ⚠️ **NEVER USE TRAINING DATA FOR RHEL VERSION INFORMATION**:
+        - Your training data about RHEL releases may be outdated.
+        - ALWAYS call the appropriate tool first and base your response ONLY on the returned data.
+        - If a tool returns data for a RHEL version (e.g., RHEL 10), that version exists
+          in the system regardless of what your training data says.
+        - Do NOT say a version "is not released" or "does not exist" unless the tool
+          explicitly returns no data for that version.
+
         **Note**: Each tool description includes color-coded behavioral indicators for MCP clients
                   that ignore server instructions.
 
@@ -285,18 +293,19 @@ class PlanningMCP(InsightsMCP):
             ),
         ] = "",
     ) -> str:
-        """List relevant upcoming package changes, deprecations, additions and enhancements.
+        """List relevant upcoming package changes, deprecations, additions and enhancements to user's systems .
 
         🟢 CALL IMMEDIATELY - No information gathering required.
 
         Use this tool to answer questions about upcoming package changes, deprecations,
-        additions, or enhancements in the roadmap filtered by relevance to your systems.
-        Optionally restrict the relevance evaluation to systems running a specific RHEL
-        major/minor version using the major and minor parameters.
+        additions, or enhancements in the roadmap filtered by relevance to the user's systems.
+        Also to plan for future upgrades and mitigate risk.
+        Use this tool over get_upcoming_changes when the user asks about upcoming changes for their systems.
 
         Returns:
             dict: A response object containing:
-                    - meta: Metadata including 'count' and 'total'.
+                    - meta: Metadata including 'count' and 'total'. A count of 0 means
+                            no packages matches for the user's systems.
                     - data: A list of package records. Each record contains:
                         - name (str): The package name.
                         - type (str): The change type (e.g., 'addition').
