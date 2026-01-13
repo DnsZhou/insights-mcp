@@ -1,4 +1,5 @@
 """Unit tests for common functions of Planning MCP tool."""
+
 import re
 
 import pytest

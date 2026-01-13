@@ -26,7 +26,7 @@ async def get_appstreams_lifecycle(  # pylint: disable=too-many-arguments,too-ma
             raise ValueError(f"Invalid mode '{mode}'. Expected 'raw' or 'streams'.")
 
         # Normalise major to an int (or None) – tolerate string input from MCP clients.
-        major_int = _normalise_int(major)
+        major_int = _normalise_int("major", major)
 
         params: dict[str, Any] = {}
 
