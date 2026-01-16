@@ -40,7 +40,7 @@ from tests.test_patterns import (
         ),
         (
             "planning__get_relevant_appstreams",
-            "Get Application Streams relevant to the requester's inventory.",
+            "Get Application Streams relevant to the requester's inventory (includes lifecycle/support dates).",
             {},
         ),
     ],

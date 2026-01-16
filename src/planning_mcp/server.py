@@ -354,20 +354,31 @@ class PlanningMCP(InsightsMCP):
             ),
         ] = True,
     ) -> str:
-        """Get Application Streams relevant to the requester's inventory.
+        """Get Application Streams relevant to the requester's inventory (includes lifecycle/support dates).
 
         🟢 CALL IMMEDIATELY - No information gathering required.
 
-        Use this tool when the user asks about Application Streams in their environment (inventory), such as:
+        Use this tool when the user asks about Application Streams in their environment
+        (inventory, hosts, systems...), such as:
         "Which app streams are we running on RHEL 9?"
         "What successor app streams could we move to from our current streams?"
 
-        If the question is scoped to a specific RHEL major or minor, set major (and optionally minor)
-        so that relevance is computed only from systems on that version.
+        Use this tool over get_appstreams_lifecycle when the user asks about their
+        inventory, hosts, systems...
 
-        If the user wants only streams currently running, set include_related=false.
-        If the user wants upgrade options or successor streams, set include_related=true and review
+        If the question is scoped to a specific RHEL major or minor, set major
+        (and optionally minor) so that relevance is computed only from systems on
+        that version.
+
+        If the user wants only streams currently running (what is installed/in use
+        in inventory), set include_related=false.
+        If the user asks whether newer versions exist, wants upgrade recommendations,
+        or wants successor streams to consider, set include_related=true and review
         entries where related=true as potential candidates.
+
+        If the user needs an exhaustive catalog view of all streams available for a
+        given component (e.g., "list all Node.js streams across RHEL 8/9/10"), use
+        get_appstreams_lifecycle.
 
         The backend computes relevance based on actual host data in the user's inventory. This tool
         does not perform any client-side filtering; all evaluation is performed by the backend.

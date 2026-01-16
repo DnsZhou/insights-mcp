@@ -164,7 +164,7 @@ This file contains test prompts to validate the Planning MCP toolset integration
 - Should provide recommendations for potential upgrades with support timeline context.
 
 ### Test 6: Check support status for specific appstream
-**Prompt:** "Is the Node.js version we're using still supported, and are there newer options available?"
+**Prompt:** "Is the Node.js version in our inventory still supported, and are there newer options available?"
 
 **Expected Behavior:**
 - Should call `planning__get_relevant_appstreams` with `include_related=true` (default).
