@@ -8,6 +8,7 @@ from logging import Logger
 from typing import Any
 
 from insights_mcp.client import InsightsClient
+from planning_mcp.common import normalise_int as _normalise_int
 
 
 async def get_relevant_appstreams(
@@ -33,20 +34,6 @@ async def get_relevant_appstreams(
         A JSON-encoded string with the response data or an error message.
     """
     try:
-
-        def _normalise_int(name: str, value: int | str | None) -> int | None:
-            if value is None:
-                return None
-            if isinstance(value, int):
-                return value
-            s = value.strip()
-            if not s:
-                return None
-            try:
-                return int(s)
-            except ValueError as exc:
-                raise ValueError(f"Parameter '{name}' must be an integer (e.g. 8, 9, 10); got '{value}'.") from exc
-
         major_int = _normalise_int("major", major)
         minor_int = _normalise_int("minor", minor)
 

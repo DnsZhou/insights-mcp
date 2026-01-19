@@ -47,8 +47,8 @@ def normalise_bool(name: str, value: bool | str | None) -> bool | None:
         if value_str == "false":
             return False
         raise ValueError(
-            f"Parameter '{name}' must be convertible to boolean ('true'/'false'); \
-got '{value}' of type '{type(value).__name__}'."
+            f"Parameter '{name}' must be convertible to boolean ('true'/'false'); "
+            f"got '{value}' of type '{type(value).__name__}'."
         )
 
     # Raise exception in case of any other type provided

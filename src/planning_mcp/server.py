@@ -317,10 +317,36 @@ class PlanningMCP(InsightsMCP):
         When the question is scoped to a specific RHEL major (or major/minor), set major (and optionally minor)
         so relevance is calculated only from systems on that version.
 
-        If the user wants only what is currently running, set include_related=false.
-
+        If the user wants only what is currently running, set include_related=false 
+        (default, not needed to be specified).
+        
         If the user wants upgrade options or newer streams related to what they run today, set include_related=true and
         look at items where related=true as potential targets.
+        
+        Response guidance:
+        - Summarize support status and end dates in plain language.
+        - If a version is retired or near end-of-support, call out the impact (loss of updates, risk).
+        - Provide recommended actions (e.g., plan upgrade, evaluate supported minor versions).
+        
+        Returns:
+            str: A JSON-encoded response object containing:
+                 - meta: Metadata including:
+                     - count (int): Number of records returned.
+                     - total (int): Total number of matching records.
+                 - data: A list of RHEL lifecycle records relevant to the user's inventory.
+                   Each record contains:
+                     - name (str): RHEL version name.
+                     - display_name (str): Human-friendly display name.
+                     - os_major (int | null): RHEL major version.
+                     - os_minor (int | null): RHEL minor version.
+                     - start_date (str | null): Planned start date (ISO format).
+                     - end_date (str | null): Planned end-of-life date (ISO format).
+                     - support_status (str): Support status (e.g. 'Supported', 'Retired').
+                     - count (int): Number of systems running this RHEL version.
+                     - lifecycle_type (str): Type of RHEL version (e.g. 'mainline', 'extended update support (EUS)', 
+                     'extended life-cycle support (ELS)', 'update services for SAP solutions (E4S)').
+                     - related (bool): True when include_related=true and the version 
+                     is a suggested upgrade target.
         """
 
         return await _get_relevant_rhel_lifecycle(
