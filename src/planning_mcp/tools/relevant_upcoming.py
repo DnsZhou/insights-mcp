@@ -45,6 +45,7 @@ async def get_relevant_upcoming_changes(
         response: dict[str, Any] | str = await insights_client.get(
             "relevant/upcoming-changes",
             params=params or None,
+            timeout=30,
         )
 
         # The underlying client may already return a JSON string; if so, pass it through.

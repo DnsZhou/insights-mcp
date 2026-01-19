@@ -51,6 +51,7 @@ async def get_relevant_appstreams(
         response: dict[str, Any] | str = await insights_client.get(
             "relevant/lifecycle/app-streams",
             params=params,
+            timeout=30,
         )
 
         # The underlying client may already return a JSON string; if so, pass it through.

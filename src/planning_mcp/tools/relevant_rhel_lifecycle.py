@@ -37,6 +37,7 @@ async def get_relevant_rhel_lifecycle(
         response: dict[str, Any] | str = await insights_client.get(
             "relevant/lifecycle/rhel",
             params=params or None,
+            timeout=30,
         )
 
         # The underlying client may already return a JSON string; if so, pass it through.
