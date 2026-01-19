@@ -8,6 +8,7 @@ from logging import Logger
 from typing import Any
 
 from insights_mcp.client import InsightsClient
+from planning_mcp.common import normalise_bool as _normalise_bool
 from planning_mcp.common import normalise_int as _normalise_int
 
 
@@ -36,6 +37,7 @@ async def get_relevant_appstreams(
     try:
         major_int = _normalise_int("major", major)
         minor_int = _normalise_int("minor", minor)
+        include_related_bool = _normalise_bool("include_related", include_related)
 
         if minor_int is not None and major_int is None:
             raise ValueError("The 'minor' parameter requires 'major' to be specified")
@@ -45,8 +47,8 @@ async def get_relevant_appstreams(
             params["major"] = major_int
         if minor_int is not None:
             params["minor"] = minor_int
-        # Map include_related to the backend's 'related' parameter
-        params["related"] = "true" if include_related else "false"
+        if include_related_bool is not None:
+            params["related"] = include_related_bool
 
         response: dict[str, Any] | str = await insights_client.get(
             "relevant/lifecycle/app-streams",
