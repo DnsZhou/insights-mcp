@@ -108,6 +108,7 @@ class TestPlanningGetRelevantRhelLifecycle:
             mock_get.assert_called_once_with(
                 "relevant/lifecycle/rhel",
                 params={"related": False},
+                timeout=30,
             )
 
             # Tool returns a JSON-encoded string; parse and validate structure
@@ -176,6 +177,7 @@ class TestPlanningGetRelevantRhelLifecycle:
             mock_get.assert_called_once_with(
                 "relevant/lifecycle/rhel",
                 params={"major": 9, "related": False},
+                timeout=30,
             )
 
             # Validate response structure
@@ -200,6 +202,7 @@ class TestPlanningGetRelevantRhelLifecycle:
             mock_get.assert_called_once_with(
                 "relevant/lifecycle/rhel",
                 params={"major": 9, "minor": 2, "related": False},
+                timeout=30,
             )
 
             # Validate response structure
@@ -221,6 +224,7 @@ class TestPlanningGetRelevantRhelLifecycle:
             mock_get.assert_called_once_with(
                 "relevant/lifecycle/rhel",
                 params={"related": include_related},
+                timeout=30,
             )
 
             # Validate response structure
@@ -249,6 +253,7 @@ class TestPlanningGetRelevantRhelLifecycle:
             mock_get.assert_called_once_with(
                 "relevant/lifecycle/rhel",
                 params={"major": 9, "minor": 4, "related": True},
+                timeout=30,
             )
 
             # Validate response structure
