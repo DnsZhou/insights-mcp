@@ -204,3 +204,13 @@ This file contains test prompts to validate the Planning MCP toolset integration
 - Should call `planning__get_relevant_rhel_lifecycle` with `major=9` and `include_related=true`.
 - Should return both currently deployed RHEL 8 versions and related higher-minor versions that are still supported but not yet deployed (marked as `related=true`).
 - Model should identify upgrade targets by highlighting versions with `related=true` and compare their support timelines to currently running versions.
+
+### Test 5: Do NOT mischaracterize minor version succession as end-of-life (RSPEED-2832)
+**Prompt:** "Summarize the versions of RHEL in use and compare to the newest versions, highlighting any systems that are approaching end of life."
+
+**Expected Behavior:**
+- Should call `planning__get_relevant_rhel_lifecycle`
+- MUST NOT report current mainline minor versions (e.g., RHEL 10.1, 9.7) as "approaching end-of-life"
+- MUST NOT recommend upgrading to unreleased versions (e.g., RHEL 10.2 before its start_date)
+- Should correctly identify that mainline end_date means "next minor release date", not EOL
+- May note that newer minor versions are forthcoming, but must frame this as routine succession
