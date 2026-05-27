@@ -117,3 +117,6 @@ js
 postgresql
 nodejs
 requester's
+EOL
+mischaracterize
+RSPEED

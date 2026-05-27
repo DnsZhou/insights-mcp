@@ -56,6 +56,21 @@ class PlanningMCP(InsightsMCP):
         - Do NOT say a version "is not released" or "does not exist" unless the tool
           explicitly returns no data for that version.
 
+        ⚠️ **CRITICAL: MINOR VERSION SUCCESSION IS NOT END-OF-LIFE**:
+        - For RHEL mainline minor versions (lifecycle_type="mainline"), the `end_date` field
+          represents when the NEXT minor version is released, NOT when the current version
+          becomes unsupported or end-of-life.
+        - Example: If RHEL 10.1 has end_date="2026-05-15", that means RHEL 10.2 releases
+          on that date. RHEL 10.1 systems remain fully supported under the RHEL 10 major
+          version lifecycle.
+        - NEVER characterize a mainline minor version as "approaching end-of-life" or
+          "expiring" just because its end_date is near. Instead explain that a newer minor
+          release is forthcoming.
+        - NEVER recommend upgrading to an unreleased version. Only recommend versions that
+          have support_status="Supported" and a start_date in the past.
+        - True end-of-life applies to MAJOR versions (minor=null) or to specific extended
+          support streams (EUS/E4S/ELS) whose dedicated end dates have passed.
+
         **Note**: Each tool description includes color-coded behavioral indicators for MCP clients
                   that ignore server instructions.
 
@@ -263,11 +278,13 @@ class PlanningMCP(InsightsMCP):
                     - data: A list of RHEL lifecycle records
                         - name (str): System name
                         - start_date (str): Start date of support
-                        - end_date (str): End date of standard support
+                        - end_date (str): For major versions (minor=null): end of full support.
+                          For mainline minor versions: planned release date of the next minor
+                          (NOT end-of-life -- the system remains supported under the major lifecycle).
                         - support_status (str): Status of support, e.g. retired, upcoming_release, supported
                         - display_name (str): How the system should be presented to the customer
                         - major (int): Major system version
-                        - minor (int): Minor system version
+                        - minor (int | null): Minor system version (null for major-only records)
                         - end_date_e4s (str | null): End date of Update Services for SAP Solutions support
                         - end_date_els (str | null): End date of Extended Life-cycle Support
                         - end_date_eus (str | null): End date of Extended Update Support
@@ -327,6 +344,11 @@ class PlanningMCP(InsightsMCP):
         - Summarize support status and end dates in plain language.
         - If a version is retired or near end-of-support, call out the impact (loss of updates, risk).
         - Provide recommended actions (e.g., plan upgrade, evaluate supported minor versions).
+        - NEVER treat mainline minor version end_date as an EOL date. When lifecycle_type
+          is "mainline" and end_date is approaching, inform the user a newer minor is
+          forthcoming -- do NOT say the system is approaching end-of-life.
+        - Only flag versions as requiring urgent action if support_status is "Retired" or
+          if it is a major version (os_minor=null) with an approaching end_date.
 
         Returns:
             str: A JSON-encoded response object containing:
@@ -340,7 +362,9 @@ class PlanningMCP(InsightsMCP):
                      - os_major (int | null): RHEL major version.
                      - os_minor (int | null): RHEL minor version.
                      - start_date (str | null): Planned start date (ISO format).
-                     - end_date (str | null): Planned end-of-life date (ISO format).
+                     - end_date (str | null): For mainline lifecycle_type, this is the date the
+                       next minor version releases (NOT end-of-life). For EUS/E4S/ELS types,
+                       this is the actual end of that support stream.
                      - support_status (str): Support status (e.g. 'Supported', 'Retired').
                      - count (int): Number of systems running this RHEL version.
                      - lifecycle_type (str): Type of RHEL version (e.g. 'mainline', 'extended update support (EUS)',
